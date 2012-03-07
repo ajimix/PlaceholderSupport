@@ -37,7 +37,7 @@ var PlaceholderSupport = new Class({
 		this.setPlaceholderOrFlagChanged(input, placeholderText);
 		input.addEvents({
             'focus': function() {
-                if (input.get('changed') === true) return;
+                if (input.get('changed') == 'true') return;
                 if (input.value === placeholderText) input.value = '';
             },
             'blur': function() {
@@ -83,7 +83,7 @@ var PlaceholderSupport = new Class({
 
 	clearPlaceholdersBeforeSubmit: function(form) {
 		form.getElements('input[placeholder]').each(function(el) {
-			if (el.get('changed') === true) return;
+			if (el.get('changed') == 'true') return;
 			if (el.value === el.get('placeholder')) el.value = '';
 		});
 	}
