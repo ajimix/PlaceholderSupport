@@ -12,7 +12,9 @@
 */
 var PlaceholderSupport = new Class({
     
+    // Class constructor
     initialize: function(){
+    	// If the browser supports placeholder, just return
         if ("placeholder" in document.createElement("input")) return;
         
         window.addEvent('domready', function(){
@@ -25,6 +27,7 @@ var PlaceholderSupport = new Class({
             }.bind(this));
 
             $$('form').addEvent('submit', function(e) {
+            	// We clear the placeholders before submitting
                 this.clearPlaceholdersBeforeSubmit(e.target);
             }.bind(this));
         }.bind(this));
@@ -54,6 +57,7 @@ var PlaceholderSupport = new Class({
 	},
 
 	setupPasswords: function(input) {
+		// We create an input that will hold our placeholder text
 		var passwordPlaceholder = this.createPasswordPlaceholder(input);
 		passwordPlaceholder.inject(input, 'after');
 
