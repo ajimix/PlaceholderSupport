@@ -11,44 +11,44 @@
 * Based on jQuery version made by Dan Bentley [github.com/danbentley]
 */
 var PlaceholderSupport = new Class({
-    
-    // Class constructor
-    initialize: function(){
-    	// If the browser supports placeholder, just return
-        if ("placeholder" in document.createElement("input")) return;
-        
-        window.addEvent('domready', function(){
-            $$('input[placeholder]:not([type="password"])').each(function(el) {
-                this.setupPlaceholder(el);
-            }.bind(this));
+	
+	// Class constructor
+	initialize: function(){
+		// If the browser supports placeholder, just return
+		if ("placeholder" in document.createElement("input")){ return; }
+		
+		window.addEvent('domready', function(){
+			$$('input[placeholder]:not([type="password"])').each(function(el) {
+				this.setupPlaceholder(el);
+			}.bind(this));
 
-            $$('input[placeholder][type="password"]').each(function(el) {
-                this.setupPasswords(el);
-            }.bind(this));
+			$$('input[placeholder][type="password"]').each(function(el) {
+				this.setupPasswords(el);
+			}.bind(this));
 
-            $$('form').addEvent('submit', function(e) {
-            	// We clear the placeholders before submitting
-                this.clearPlaceholdersBeforeSubmit(e.target);
-            }.bind(this));
-        }.bind(this));
-    },
-    
-    setupPlaceholder: function(input) {
+			$$('form').addEvent('submit', function(e) {
+				// We clear the placeholders before submitting
+				this.clearPlaceholdersBeforeSubmit(e.target);
+			}.bind(this));
+		}.bind(this));
+	},
+	
+	setupPlaceholder: function(input) {
 
 		var placeholderText = input.get('placeholder');
 
 		this.setPlaceholderOrFlagChanged(input, placeholderText);
 		input.addEvents({
-            'focus': function() {
-                if (input.get('changed') == 'true') return;
-                if (input.value === placeholderText) input.value = '';
-            },
-            'blur': function() {
-                if (input.value === '') input.value = placeholderText;
-            },
-            'change': function() {
-                input.set('changed', input.value !== '');
-            }
+			'focus': function() {
+				if (input.get('changed') == 'true'){ return; }
+				if (input.value === placeholderText){ input.value = ''; }
+			},
+			'blur': function() {
+				if (input.value === ''){ input.value = placeholderText; }
+			},
+			'change': function() {
+				input.set('changed', input.value !== '');
+			}
 		});
 	},
 
@@ -64,7 +64,7 @@ var PlaceholderSupport = new Class({
 		(input.value === '') ? input.hide() : passwordPlaceholder.hide();
 
 		input.addEvent('blur', function() {
-			if (input.value !== '') return;
+			if (input.value !== ''){ return; }
 			input.hide();
 			passwordPlaceholder.show();
 		});
@@ -81,14 +81,14 @@ var PlaceholderSupport = new Class({
 			value: input.get('placeholder'),
 			id: input.get('id'),
 			readonly: true,
-            'class': input.get('class')
+			'class': input.get('class')
 		});
 	},
 
 	clearPlaceholdersBeforeSubmit: function(form) {
 		form.getElements('input[placeholder]').each(function(el) {
-			if (el.get('changed') == 'true') return;
-			if (el.value === el.get('placeholder')) el.value = '';
+			if (el.get('changed') == 'true'){ return; }
+			if (el.value === el.get('placeholder')){ el.value = ''; }
 		});
 	}
 });
