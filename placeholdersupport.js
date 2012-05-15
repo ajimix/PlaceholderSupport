@@ -33,12 +33,13 @@ var PlaceholderSupport = new Class({
 		}.bind(this));
 	},
 	
+	// Adds placeholder to all elements except password tyoe
 	setupPlaceholder: function(input) {
 
 		var placeholderText = input.get('placeholder');
 
-		this.setPlaceholderOrFlagChanged(input, placeholderText);
-		input.addEvents({
+		this.setPlaceholderOrFlagChanged(input, placeholderText); // We create the placeholder or flag true that have been changed in case of
+		input.addEvents({ // Adding events to all kind of changes
 			'focus': function() {
 				if (input.get('changed') == 'true'){ return; }
 				if (input.value === placeholderText){ input.value = ''; }
@@ -56,6 +57,7 @@ var PlaceholderSupport = new Class({
 		(input.value === '') ? input.value = text : input.set('changed', true);
 	},
 
+	// Passwords should be treated different, we create a second input that holds the placeholder so it can be shown
 	setupPasswords: function(input) {
 		// We create an input that will hold our placeholder text
 		var passwordPlaceholder = this.createPasswordPlaceholder(input);
@@ -63,6 +65,7 @@ var PlaceholderSupport = new Class({
 
 		(input.value === '') ? input.hide() : passwordPlaceholder.hide();
 
+		// Events to show and hide the placeholder and the original input
 		input.addEvent('blur', function() {
 			if (input.value !== ''){ return; }
 			input.hide();
@@ -85,6 +88,7 @@ var PlaceholderSupport = new Class({
 		});
 	},
 
+	// We clear all the placeholder texts before submit
 	clearPlaceholdersBeforeSubmit: function(form) {
 		form.getElements('input[placeholder]').each(function(el) {
 			if (el.get('changed') == 'true'){ return; }
